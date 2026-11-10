@@ -12,8 +12,14 @@ public class App {
             return;
         }
 
+        if (args.length == 1 && args[0].equals("list")) {
+            listBooks();
+            return;
+        }
+
         if (args.length != 3 || !args[0].equals("add")) {
             System.out.println("Usage: java App add \"Title\" \"Author\"");
+            System.out.println("       java App list");
             return;
         }
 
@@ -28,6 +34,16 @@ public class App {
 
     static void printBanner() {
         System.out.println("Library Tracker");
+    }
+
+    static void listBooks() throws IOException {
+        String books = Files.readString(BOOKS_FILE).strip();
+
+        if (books.matches("\\[\\s*\\]")) {
+            System.out.println("No books saved.");
+        } else {
+            System.out.println(books);
+        }
     }
 
     static void addBook(String title, String author) throws IOException {
